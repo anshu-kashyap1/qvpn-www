@@ -1,34 +1,254 @@
-.App-logo {
-    height: 40vmin;
+/* Star Field Background */
+.star-field {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.star:nth-child(2n) {
+    animation-delay: 1s;
+}
+
+.star:nth-child(3n) {
+    animation-delay: 2s;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
     }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
+/* Glow Orbs */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.glow-orb-purple {
+    background: rgba(124, 58, 237, 0.3);
+}
+
+.glow-orb-blue {
+    background: rgba(37, 99, 235, 0.3);
+}
+
+.glow-orb-cyan {
+    background: rgba(34, 211, 238, 0.2);
+}
+
+/* Hero Section Gradient */
+.hero-gradient {
+    background: 
+        radial-gradient(ellipse 80% 80% at 50% -20%, rgba(124, 58, 237, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(37, 99, 235, 0.1), transparent);
+}
+
+/* Feature Card Hover Effect */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+}
+
+.feature-card:hover::before {
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.3) 0%, transparent 100%);
+}
+
+/* Pricing Card Highlight */
+.pricing-premium {
+    position: relative;
+}
+
+.pricing-premium::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1.5rem;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.5) 0%, rgba(37, 99, 235, 0.3) 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+}
+
+/* Trust Stats Marquee */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* App Mockup Styling */
+.app-mockup {
+    position: relative;
+    background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0f 100%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 
+        0 50px 100px -20px rgba(0, 0, 0, 0.5),
+        0 0 60px -15px rgba(124, 58, 237, 0.3);
+}
+
+.app-mockup::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 24px;
+    background: #000;
+    border-radius: 20px;
+}
+
+/* Navbar Blur Background */
+.nav-blur {
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Step Number Watermark */
+.step-number {
+    position: absolute;
+    font-size: 120px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.03);
+    top: -20px;
+    left: -10px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* CTA Section Gradient */
+.cta-gradient {
+    background: 
+        radial-gradient(ellipse 100% 100% at 50% 100%, rgba(124, 58, 237, 0.2), transparent 70%);
+}
+
+/* Footer Grid Pattern */
+.footer-pattern {
+    background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+/* Animated Line */
+.animated-line {
+    position: relative;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.5), transparent);
+}
+
+/* Icon Container */
+.icon-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.App-link {
-    color: #61dafb;
+/* Mobile Menu */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 15, 0.98);
+    backdrop-filter: blur(20px);
+    z-index: 100;
 }
 
-@keyframes App-logo-spin {
+/* Stats Card Animation */
+.stats-card {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
     from {
-        transform: rotate(0deg);
+        opacity: 0;
+        transform: translateY(20px);
     }
     to {
-        transform: rotate(360deg);
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Connection Line Animation */
+.connection-line {
+    position: relative;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(124, 58, 237, 0.3), rgba(37, 99, 235, 0.3));
+}
+
+.connection-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.8), transparent);
+    animation: lineMove 2s linear infinite;
+}
+
+@keyframes lineMove {
+    0% {
+        left: -50px;
+    }
+    100% {
+        left: 100%;
     }
 }
