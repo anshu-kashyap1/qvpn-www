@@ -206,7 +206,7 @@
     bottom: 0;
     background: rgba(10, 10, 15, 0.98);
     backdrop-filter: blur(20px);
-    z-index: 100;
+    z-index: 40;
 }
 
 /* Stats Card Animation */
