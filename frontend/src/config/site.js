@@ -1,8 +1,14 @@
-// Site Configuration - Single Source of Truth
-// QVPN Marketing Website Configuration
+// =============================================================================
+// QVPN Site Configuration - Single Source of Truth
+// =============================================================================
+// This file contains all centralized configuration for the QVPN marketing website.
+// Update values here to reflect changes across the entire site.
+// =============================================================================
 
+// =============================================================================
+// BRAND INFORMATION
+// =============================================================================
 export const SITE_CONFIG = {
-  // Brand Information
   brand: {
     name: "QVPN",
     tagline: "Privacy-First VPN",
@@ -11,27 +17,39 @@ export const SITE_CONFIG = {
     url: "https://qvpn.io"
   },
 
-  // Legal Business Information
+  // ===========================================================================
+  // LEGAL BUSINESS INFORMATION
+  // ===========================================================================
+  // TODO: Update businessAddress before public launch
+  // TODO: Update governingLaw with specific jurisdiction if needed
+  // ===========================================================================
   legal: {
     operatorName: "DIAMANTE FINANCIAL TECHNOLOGIES L.L.C.",
     operatorDisclosure: "QVPN is operated by DIAMANTE FINANCIAL TECHNOLOGIES L.L.C.",
     copyrightYear: new Date().getFullYear(),
-    // PLACEHOLDER: Add business address when available
-    businessAddress: "[Business Address - To Be Added]",
-    // PLACEHOLDER: Add state/jurisdiction for governing law
-    governingLaw: "[Governing Law Jurisdiction - To Be Added]"
+    
+    // TODO: [BEFORE PUBLIC LAUNCH] Replace with actual business address
+    businessAddress: "[TO BE PROVIDED BEFORE PUBLIC LAUNCH]",
+    
+    // Governing law statement - does not hardcode specific jurisdiction
+    governingLaw: "These Terms are governed by the laws of the jurisdiction in which DIAMANTE FINANCIAL TECHNOLOGIES L.L.C. is organized, unless otherwise required by applicable law."
   },
 
-  // Contact Information
+  // ===========================================================================
+  // CONTACT INFORMATION
+  // ===========================================================================
   contact: {
-    supportEmail: "support@qvpn.io",
-    businessEmail: "hello@qvpn.io",
-    privacyEmail: "privacy@qvpn.io",
-    // PLACEHOLDER: Add support hours when defined
+    supportEmail: "support@qvpn.io",      // Primary public support email
+    businessEmail: "hello@qvpn.io",        // Business inquiries
+    privacyEmail: "privacy@qvpn.io",       // Privacy-related requests
     supportHours: "Monday - Friday, 9:00 AM - 6:00 PM (EST)"
   },
 
-  // Social Links (Placeholders - update when accounts are created)
+  // ===========================================================================
+  // SOCIAL LINKS
+  // ===========================================================================
+  // TODO: Update with actual social media URLs when accounts are created
+  // ===========================================================================
   social: {
     twitter: "#",
     discord: "#",
@@ -39,15 +57,28 @@ export const SITE_CONFIG = {
     linkedin: "#"
   },
 
-  // App Store Links (Placeholders - update when apps are published)
+  // ===========================================================================
+  // APP STORE LINKS
+  // ===========================================================================
+  // TODO: Update with actual app store URLs when apps are published
+  // ===========================================================================
   appLinks: {
-    googlePlay: "#",
-    appStore: "#",
-    // Supported platforms
+    googlePlay: {
+      url: "#",
+      available: false,
+      label: "Android app — coming soon"
+    },
+    appStore: {
+      url: "#",
+      available: false,
+      label: "iOS app — coming soon"
+    },
     platforms: ["Android", "iOS", "Windows", "macOS"]
   },
 
-  // SEO Defaults
+  // ===========================================================================
+  // SEO DEFAULTS
+  // ===========================================================================
   seo: {
     defaultTitle: "QVPN - Privacy-First VPN | Fast & Secure",
     titleTemplate: "%s | QVPN",
@@ -57,7 +88,11 @@ export const SITE_CONFIG = {
   }
 };
 
-// Pricing Configuration - Single Source of Truth
+// =============================================================================
+// PRICING CONFIGURATION
+// =============================================================================
+// All pricing values are centralized here for easy updates.
+// =============================================================================
 export const PRICING_CONFIG = {
   currency: "USD",
   currencySymbol: "$",
@@ -66,7 +101,7 @@ export const PRICING_CONFIG = {
     free: {
       id: "free",
       name: "Free",
-      description: "Get started with basic VPN protection",
+      description: "Limited access with ads",
       price: {
         monthly: 0,
         yearly: 0
@@ -90,11 +125,11 @@ export const PRICING_CONFIG = {
       name: "Premium",
       description: "Unlimited VPN access with all features",
       price: {
-        // PLACEHOLDER: Confirm exact pricing before launch
         monthly: 9.99,
-        yearly: 59.99 // Billed annually
+        yearly: 59.99
       },
-      yearlyMonthlyEquivalent: 4.99, // $59.99/12
+      yearlyMonthlyEquivalent: 4.99, // $59.99 / 12
+      yearlyBadge: "Best Value",
       features: [
         "Unlimited VPN access",
         "All server locations",
@@ -111,29 +146,37 @@ export const PRICING_CONFIG = {
     }
   },
 
-  // Billing Information
+  // ===========================================================================
+  // BILLING INFORMATION
+  // ===========================================================================
   billing: {
     provider: "Stripe",
     securityNote: "Payments are processed securely via Stripe.",
-    // PLACEHOLDER: Update statement descriptor when confirmed
     statementDescriptor: "QVPN*SUBSCRIPTION",
     autoRenewal: true,
-    renewalNote: "Subscriptions automatically renew at the end of each billing period unless cancelled.",
+    
+    // Renewal copy
+    renewalNote: "Subscriptions renew automatically unless canceled before the renewal date.",
+    
+    // Cancellation copy
     cancellationNote: "You can cancel anytime. Access continues until the end of your current billing period.",
-    gracePeriodDays: 7,
-    gracePeriodNote: "If a payment fails, you have a 7-day grace period to update your payment method before losing Premium access."
+    
+    // Grace period copy
+    gracePeriodNote: "If payment fails, access may continue for a short grace period before downgrade to free tier."
   },
 
-  // Refund Policy
+  // ===========================================================================
+  // REFUND POLICY
+  // ===========================================================================
   refund: {
-    // PLACEHOLDER: Confirm refund policy details
-    eligible: true,
-    windowDays: 7,
-    note: "Refunds may be requested within 7 days of purchase for unused subscription time. Contact support@qvpn.io for refund requests."
+    note: "Refunds are handled according to the Refund & Cancellation Policy and applicable law.",
+    contactNote: "For refund requests, contact support@qvpn.io with your account details."
   }
 };
 
-// Privacy & Data Collection Information
+// =============================================================================
+// PRIVACY & DATA COLLECTION INFORMATION
+// =============================================================================
 export const PRIVACY_CONFIG = {
   // What we collect
   dataCollected: {
@@ -169,7 +212,7 @@ export const PRIVACY_CONFIG = {
     "Traffic content or data packets"
   ],
 
-  // Clear privacy statements
+  // Privacy statements
   statements: {
     noActivityLogging: "We do not log or monitor your browsing activity while connected to QVPN.",
     noAdTargeting: "We do not use your browsing activity for advertising or sell your data to third parties.",
@@ -178,7 +221,9 @@ export const PRIVACY_CONFIG = {
   }
 };
 
-// Email Communications (for SES review)
+// =============================================================================
+// EMAIL COMMUNICATIONS (for SES review)
+// =============================================================================
 export const EMAIL_CONFIG = {
   transactionalEmails: [
     {
@@ -198,7 +243,7 @@ export const EMAIL_CONFIG = {
     },
     {
       type: "Account Recovery",
-      description: "Email to recover a recently deleted account within the 14-day recovery window",
+      description: "Email to recover a recently deleted account within the recovery window",
       trigger: "Account recovery request"
     },
     {
@@ -209,7 +254,7 @@ export const EMAIL_CONFIG = {
     {
       type: "Subscription Renewal Reminder",
       description: "Reminder before your subscription automatically renews",
-      trigger: "7 days before renewal date"
+      trigger: "Before renewal date"
     },
     {
       type: "Payment Failed",
@@ -218,8 +263,8 @@ export const EMAIL_CONFIG = {
     },
     {
       type: "Grace Period Warning",
-      description: "Warning that your grace period is ending and Premium access will be lost",
-      trigger: "During 7-day grace period after failed payment"
+      description: "Warning that your grace period is ending and Premium access may be lost",
+      trigger: "During grace period after failed payment"
     },
     {
       type: "Subscription Cancelled",
@@ -229,7 +274,9 @@ export const EMAIL_CONFIG = {
   ]
 };
 
-// Account Management Information
+// =============================================================================
+// ACCOUNT MANAGEMENT INFORMATION
+// =============================================================================
 export const ACCOUNT_CONFIG = {
   deletion: {
     recoveryPeriodDays: 14,
@@ -241,11 +288,13 @@ export const ACCOUNT_CONFIG = {
   },
   subscription: {
     expiryBehavior: "When your Premium subscription ends or expires, your account automatically reverts to the Free plan with limited features.",
-    gracePeriod: "If a payment fails, you have 7 days to update your payment method. During this grace period, you retain Premium access."
+    gracePeriod: "If payment fails, access may continue for a short grace period before downgrade to free tier."
   }
 };
 
-// Navigation Links
+// =============================================================================
+// NAVIGATION LINKS
+// =============================================================================
 export const NAV_LINKS = {
   main: [
     { name: "Features", href: "/#features" },
@@ -277,7 +326,9 @@ export const NAV_LINKS = {
   }
 };
 
-// FAQ Data
+// =============================================================================
+// FAQ DATA
+// =============================================================================
 export const FAQ_DATA = [
   {
     category: "General",
@@ -288,7 +339,7 @@ export const FAQ_DATA = [
       },
       {
         q: "Which devices does QVPN support?",
-        a: "QVPN is available for Android, iOS, Windows, and macOS. You can download the app from the Google Play Store, Apple App Store, or our website."
+        a: "QVPN is available for Android, iOS, Windows, and macOS. You can download the app from the Google Play Store, Apple App Store, or our website when available."
       },
       {
         q: "How does QVPN protect my privacy?",
@@ -318,7 +369,7 @@ export const FAQ_DATA = [
     questions: [
       {
         q: "How do subscriptions work?",
-        a: "Premium subscriptions are billed monthly or yearly, depending on your chosen plan. Subscriptions automatically renew at the end of each billing period unless you cancel."
+        a: "Premium subscriptions are billed monthly or yearly, depending on your chosen plan. Subscriptions renew automatically unless canceled before the renewal date."
       },
       {
         q: "How do I cancel my subscription?",
@@ -326,7 +377,7 @@ export const FAQ_DATA = [
       },
       {
         q: "What happens if my payment fails?",
-        a: "If a payment fails, you enter a 7-day grace period during which you retain Premium access. You'll receive email notifications to update your payment method. If not resolved within 7 days, your account reverts to the Free plan."
+        a: "If payment fails, access may continue for a short grace period before downgrade to free tier. You'll receive email notifications to update your payment method."
       },
       {
         q: "What happens when my subscription expires?",
@@ -334,7 +385,7 @@ export const FAQ_DATA = [
       },
       {
         q: "Can I get a refund?",
-        a: "Refunds may be requested within 7 days of purchase for unused subscription time. Please contact support@qvpn.io with your refund request."
+        a: "Refunds are handled according to the Refund & Cancellation Policy and applicable law. Please contact support@qvpn.io with your refund request."
       }
     ]
   },
@@ -360,3 +411,28 @@ export const FAQ_DATA = [
     ]
   }
 ];
+
+// =============================================================================
+// TODO LIST FOR LAUNCH
+// =============================================================================
+// Before public launch, ensure the following are updated:
+// 
+// 1. SITE_CONFIG.legal.businessAddress
+//    - Replace placeholder with actual business address
+//
+// 2. SITE_CONFIG.appLinks.googlePlay.url
+//    - Update with actual Google Play Store URL
+//    - Set available: true
+//
+// 3. SITE_CONFIG.appLinks.appStore.url  
+//    - Update with actual Apple App Store URL
+//    - Set available: true
+//
+// 4. SITE_CONFIG.social.*
+//    - Update with actual social media URLs
+//
+// 5. Contact Form Integration
+//    - Implement backend API endpoint for form submission
+//    - Update ContactPage.jsx to use API instead of mailto fallback
+//
+// =============================================================================
