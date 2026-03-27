@@ -1,63 +1,187 @@
-# QVPN Landing Page - Product Requirements Document
+# QVPN Marketing Website - Product Requirements Document
 
 ## Original Problem Statement
-Build a modern SINGLE PAGE landing website for a VPN app called QVPN inspired by the design of https://codegent.webflow.io/. Frontend-only (no backend). Dark modern SaaS UI with purple/blue gradient accents, glassmorphism effects, and smooth animations.
+Build a complete production-ready marketing website for QVPN at qvpn.io. The website must be suitable for Stripe business review, AWS SES production review, and general customer trust and conversion.
 
-## User Personas
-1. **Casual Mobile Users** - Want secure browsing without paying, willing to watch ads for free VPN minutes
-2. **Power Users** - Need unlimited, fast VPN access, willing to pay for premium features
-3. **Privacy-Conscious Users** - Prioritize no-logs policy and military-grade encryption
+## Business Context
+- **Product Brand Name**: QVPN
+- **Domain**: qvpn.io
+- **Legal Business/Operator**: DIAMANTE FINANCIAL TECHNOLOGIES L.L.C.
+- **Product Type**: Consumer VPN app / subscription business
 
-## Core Requirements (Static)
-- Single page React + Tailwind CSS landing page
-- Dark theme (#0a0a0f background)
-- Purple/blue gradient accents matching CodeGent style
-- Mobile-first responsive design
-- Smooth scroll navigation
-- Inter font family
+## Core Positioning
+- Fast VPN
+- Privacy-first
+- WireGuard-based
+- Secure internet access
+- Simple apps and global server access
 
-## What's Been Implemented (Jan 2026)
-- [x] **Navbar** - Fixed navigation with logo, links (Features, How It Works, Pricing, About), mobile menu toggle
-- [x] **Hero Section** - Gradient headline, subtext, CTAs (Get Started, Download App), Google Play & App Store badges
-- [x] **Trust Stats Bar** - 4 stats (1M+ Users, 50+ Servers, 99.9% Uptime, 10Gbps Speed)
-- [x] **Features Section** - 6 feature cards with icons (Lightning Fast VPN, Ad-Based Free Usage, No Logs Policy, Global Servers, Kill Switch, Auto Connect)
-- [x] **How It Works** - 3-step process with animated connection line
-- [x] **Product Showcase** - Interactive phone mockup showing VPN connection UI
-- [x] **Pricing Section** - Monthly/Yearly toggle, Free ($0) and Premium ($9.99/$4.99) plans
-- [x] **Why QVPN Section** - 3 reasons (Mobile Networks, WireGuard, Session Control)
-- [x] **CTA Section** - Download Now and Learn More buttons
-- [x] **Footer** - Links columns, social icons, copyright
+## Privacy Positioning (IMPORTANT)
+- Do NOT claim we collect user activity logs
+- Privacy copy must be honest and conservative
+- We collect only basic information necessary to operate the service
+- Safe wording used throughout:
+  - "Privacy-first VPN"
+  - "We do not log your browsing activity"
+  - "We do not use your browsing activity for advertising"
+  - "We collect only the minimum information necessary"
 
-## Technical Implementation
-- React 19 with functional components
+## What's Been Implemented (January 2026)
+
+### Pages Created/Updated
+| Page | Route | Description |
+|------|-------|-------------|
+| Home | `/` | Hero, trust section, what is QVPN, use cases, features, how it works, pricing preview, FAQ preview, CTA |
+| Pricing | `/pricing` | Full pricing plans, feature comparison, billing FAQ, payment security |
+| About | `/about` | Mission, values, company information with legal disclosure |
+| Contact | `/contact` | Support email, business email, privacy email, contact form |
+| FAQ | `/faq` | Searchable FAQ with 4 categories |
+| Privacy Policy | `/privacy` | Complete privacy policy with data collection details |
+| Terms of Service | `/terms` | Full terms including acceptable use, billing, termination |
+| Refund Policy | `/refund-policy` | Cancellation and refund details |
+| Help Center | `/help` | Help center navigation |
+| Account & Billing Help | `/help/account-billing` | Account management, password, deletion, recovery, billing |
+| Email Notifications | `/help/emails` | Explanation of transactional emails sent |
+
+### Centralized Configuration Files
+| File | Purpose |
+|------|---------|
+| `/app/frontend/src/config/site.js` | Single source of truth for all site configuration |
+
+#### Configuration Contents in site.js:
+- `SITE_CONFIG` - Brand, legal, contact, social, app links, SEO
+- `PRICING_CONFIG` - Plans, billing, refund policy
+- `PRIVACY_CONFIG` - Data collected/not collected, privacy statements
+- `EMAIL_CONFIG` - Transactional email types
+- `ACCOUNT_CONFIG` - Deletion, recovery, subscription behavior
+- `NAV_LINKS` - Navigation structure
+- `FAQ_DATA` - All FAQ questions and answers
+
+### Components Created
+| Component | Path |
+|-----------|------|
+| Layout | `/app/frontend/src/components/layout/Layout.jsx` |
+| Navbar | `/app/frontend/src/components/layout/Navbar.jsx` |
+| Footer | `/app/frontend/src/components/layout/Footer.jsx` |
+
+### Technical Stack
+- React 19 with React Router
 - Tailwind CSS for styling
-- Lucide-react for icons
-- Shadcn/UI components (Button, Badge, Switch)
-- Custom CSS for glassmorphism, glow effects, animations
+- Shadcn/UI components
+- Lucide-react icons
+
+## SEO Implementation
+- Updated `/app/frontend/public/index.html` with:
+  - Primary meta tags (title, description, keywords, author)
+  - Open Graph meta tags
+  - Twitter Card meta tags
+  - Favicon links
+  - Canonical URL
+
+## Placeholders Requiring Business/Legal Input
+
+### In `/app/frontend/src/config/site.js`:
+1. **Business Address**: `businessAddress: "[Business Address - To Be Added]"`
+2. **Governing Law**: `governingLaw: "[Governing Law Jurisdiction - To Be Added]"`
+3. **App Store Links**: Currently set to `"#"` - update when apps are published
+4. **Social Links**: Currently set to `"#"` - update when accounts are created
+5. **Pricing**: Confirm exact pricing before launch
+   - Free plan: $0
+   - Premium monthly: $9.99
+   - Premium yearly: $59.99 ($4.99/month equivalent)
+6. **Statement Descriptor**: `statementDescriptor: "QVPN*SUBSCRIPTION"`
+7. **Refund Window**: Currently set to 7 days - confirm
+
+## Legal Pages Content
+All legal pages are written specifically for QVPN and include:
+- Privacy Policy: Specific data collection practices, no fake claims
+- Terms of Service: Acceptable use, billing, termination clauses
+- Refund Policy: Cancellation process, refund eligibility, grace period
+
+## Trust & Compliance Features
+1. **Legal Disclosure**: Footer shows "QVPN is operated by DIAMANTE FINANCIAL TECHNOLOGIES L.L.C."
+2. **Support Email**: Visible throughout site (support@qvpn.io)
+3. **Privacy Statements**: Honest, conservative language
+4. **Billing Clarity**: Subscription renewal, cancellation, grace period explained
+5. **Payment Security**: "Payments are processed securely via Stripe"
+
+## Contact Form Behavior
+The contact form uses a mailto fallback approach:
+- Validates form fields (name, email, subject, message)
+- Opens user's email client with pre-filled content
+- Shows confirmation message
+- Provides direct email link as fallback
+
+Note: For backend form submission, integrate with email service provider.
 
 ## P0 Features (Completed)
-- All 9 page sections implemented
-- Responsive design (mobile + desktop)
-- Smooth scroll navigation
-- Interactive pricing toggle
-- Hover effects and animations
+- [x] All 11 pages implemented
+- [x] Responsive design (mobile + desktop)
+- [x] Navigation with smooth scroll
+- [x] Footer with all legal links
+- [x] Legal operator disclosure
+- [x] Support email visibility
+- [x] Pricing with monthly/yearly toggle
+- [x] FAQ with search
+- [x] SEO meta tags
+- [x] Honest privacy copy (no fake claims)
 
 ## P1 Features (Backlog)
-- Contact form integration
-- Newsletter signup functionality
-- Analytics tracking implementation
-- SEO meta tags optimization
-- Real app store links when available
+- [ ] Replace placeholder app store links
+- [ ] Replace placeholder social links
+- [ ] Add business address
+- [ ] Add governing law jurisdiction
+- [ ] Implement backend contact form
+- [ ] Add analytics tracking
+- [ ] Add sitemap.xml
+- [ ] Add robots.txt
 
 ## P2 Features (Future)
-- Testimonials carousel
-- Live server status integration
-- Multi-language support
-- Dark/Light theme toggle
+- [ ] Live chat integration
+- [ ] Server status page
+- [ ] Multi-language support
+- [ ] Blog section
 
 ## Next Tasks
-1. Replace placeholder links with real app store URLs when available
-2. Add contact form backend integration if needed
-3. Implement analytics (Google Analytics/Mixpanel)
-4. Add SEO meta tags and Open Graph tags
-5. Consider adding testimonials section
+1. Confirm and update pricing values in config
+2. Add real app store URLs when apps are published
+3. Add business address for legal compliance
+4. Confirm governing law jurisdiction
+5. Set up backend contact form if needed
+6. Add Google Analytics or similar
+
+## File Structure
+```
+/app/frontend/src/
+├── App.js                    # Main app with routing
+├── config/
+│   └── site.js              # Centralized configuration
+├── components/
+│   └── layout/
+│       ├── Layout.jsx
+│       ├── Navbar.jsx
+│       ├── Footer.jsx
+│       └── index.js
+└── pages/
+    ├── HomePage.jsx
+    ├── PricingPage.jsx
+    ├── AboutPage.jsx
+    ├── ContactPage.jsx
+    ├── FAQPage.jsx
+    ├── PrivacyPage.jsx
+    ├── TermsPage.jsx
+    ├── RefundPolicyPage.jsx
+    ├── HelpPage.jsx
+    ├── AccountBillingHelpPage.jsx
+    ├── EmailNotificationsPage.jsx
+    └── index.js
+```
+
+## Changelog
+- **Jan 2026**: Complete website rewrite with multi-page structure
+  - Added 11 pages with proper routing
+  - Created centralized configuration
+  - Implemented honest privacy copy
+  - Added legal operator disclosure throughout
+  - Added SEO meta tags
+  - Created comprehensive legal pages
