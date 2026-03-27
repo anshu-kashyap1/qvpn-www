@@ -88,29 +88,53 @@ const HeroSection = () => {
           </div>
 
           {/* App Store Badges */}
-          <div id="download" className="flex items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <a 
-              href={SITE_CONFIG.appLinks.googlePlay}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-200"
-              data-testid="google-play-link"
-            >
-              <Play className="w-5 h-5 text-white" />
-              <div className="text-left">
-                <div className="text-[10px] text-gray-400">GET IT ON</div>
-                <div className="text-sm font-medium text-white">Google Play</div>
+          <div id="download" className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            {SITE_CONFIG.appLinks.googlePlay.available ? (
+              <a 
+                href={SITE_CONFIG.appLinks.googlePlay.url}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-200"
+                data-testid="google-play-link"
+              >
+                <Play className="w-5 h-5 text-white" />
+                <div className="text-left">
+                  <div className="text-[10px] text-gray-400">GET IT ON</div>
+                  <div className="text-sm font-medium text-white">Google Play</div>
+                </div>
+              </a>
+            ) : (
+              <div 
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 opacity-60 cursor-not-allowed"
+                data-testid="google-play-link"
+              >
+                <Play className="w-5 h-5 text-gray-400" />
+                <div className="text-left">
+                  <div className="text-sm font-medium text-gray-400">{SITE_CONFIG.appLinks.googlePlay.label}</div>
+                </div>
               </div>
-            </a>
-            <a 
-              href={SITE_CONFIG.appLinks.appStore}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-200"
-              data-testid="app-store-link"
-            >
-              <Apple className="w-5 h-5 text-white" />
-              <div className="text-left">
-                <div className="text-[10px] text-gray-400">Download on the</div>
-                <div className="text-sm font-medium text-white">App Store</div>
+            )}
+            {SITE_CONFIG.appLinks.appStore.available ? (
+              <a 
+                href={SITE_CONFIG.appLinks.appStore.url}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-200"
+                data-testid="app-store-link"
+              >
+                <Apple className="w-5 h-5 text-white" />
+                <div className="text-left">
+                  <div className="text-[10px] text-gray-400">Download on the</div>
+                  <div className="text-sm font-medium text-white">App Store</div>
+                </div>
+              </a>
+            ) : (
+              <div 
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 opacity-60 cursor-not-allowed"
+                data-testid="app-store-link"
+              >
+                <Apple className="w-5 h-5 text-gray-400" />
+                <div className="text-left">
+                  <div className="text-sm font-medium text-gray-400">{SITE_CONFIG.appLinks.appStore.label}</div>
+                </div>
               </div>
-            </a>
+            )}
           </div>
         </div>
       </div>
