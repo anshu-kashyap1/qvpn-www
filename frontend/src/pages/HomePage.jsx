@@ -404,7 +404,7 @@ const PricingPreviewSection = () => {
             <span className={`text-sm ${!isYearly ? 'text-white' : 'text-gray-500'}`}>Monthly</span>
             <Switch checked={isYearly} onCheckedChange={setIsYearly} data-testid="billing-toggle" />
             <span className={`text-sm ${isYearly ? 'text-white' : 'text-gray-500'}`}>
-              Yearly <span className="text-xs text-emerald-400 font-medium">Save 50%</span>
+              Yearly <span className="text-xs text-emerald-400 font-medium">{premium.yearlyBadge}</span>
             </span>
           </div>
         </div>
