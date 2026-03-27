@@ -417,7 +417,7 @@ const PricingPreviewSection = () => {
               <p className="text-gray-400 text-sm">{free.description}</p>
             </div>
             <div className="mb-8">
-              <span className="text-5xl font-bold text-white">${PRICING_CONFIG.currencySymbol}0</span>
+              <span className="text-5xl font-bold text-white">{PRICING_CONFIG.currencySymbol}0</span>
             </div>
             <ul className="space-y-4 mb-8 flex-grow">
               {free.features.map((feature, i) => (
