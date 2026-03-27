@@ -185,8 +185,7 @@ export const TermsPage = () => {
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-white mb-6">11. Governing Law</h2>
             <p className="text-gray-400">
-              These Terms shall be governed by and construed in accordance with the laws of {SITE_CONFIG.legal.governingLaw}, 
-              without regard to its conflict of law provisions.
+              {SITE_CONFIG.legal.governingLaw}
             </p>
           </div>
 
