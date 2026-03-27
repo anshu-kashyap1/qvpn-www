@@ -1,10 +1,29 @@
 import { useState } from "react";
-import { Mail, MessageSquare, Clock, Send, CheckCircle } from "lucide-react";
+import { Mail, MessageSquare, Clock, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { SITE_CONFIG } from "@/config/site";
+
+// =============================================================================
+// TODO: CONTACT FORM BACKEND INTEGRATION
+// =============================================================================
+// This contact form currently uses a mailto fallback.
+// To integrate with a backend API:
+// 
+// 1. Create a backend endpoint (e.g., POST /api/contact)
+// 2. Update handleSubmit to call the API instead of mailto
+// 3. Handle success/error states appropriately
+// 4. Consider adding rate limiting and spam protection (reCAPTCHA)
+//
+// Example API integration:
+// const response = await fetch('/api/contact', {
+//   method: 'POST',
+//   headers: { 'Content-Type': 'application/json' },
+//   body: JSON.stringify(formState)
+// });
+// =============================================================================
 
 export const ContactPage = () => {
   const [formState, setFormState] = useState({
@@ -13,15 +32,55 @@ export const ContactPage = () => {
     subject: "",
     message: ""
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  // Form validation
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formState.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    
+    if (!formState.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    
+    if (!formState.subject.trim()) {
+      newErrors.subject = "Subject is required";
+    }
+    
+    if (!formState.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formState.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For now, this opens the default email client as fallback
-    // In production, this would connect to a backend endpoint
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    // TODO: Replace with backend API call when available
+    // For now, open mailto as fallback
     const mailtoLink = `mailto:${SITE_CONFIG.contact.supportEmail}?subject=${encodeURIComponent(formState.subject)}&body=${encodeURIComponent(`Name: ${formState.name}\nEmail: ${formState.email}\n\n${formState.message}`)}`;
     window.location.href = mailtoLink;
-    setSubmitted(true);
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormState(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
   };
 
   return (
@@ -46,27 +105,28 @@ export const ContactPage = () => {
           <div>
             <h2 className="text-2xl font-bold text-white mb-6">Contact Information</h2>
             
-            <div className="space-y-6">
-              <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-violet-600/20 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-violet-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-white font-semibold mb-1">Support Email</h3>
-                    <a 
-                      href={`mailto:${SITE_CONFIG.contact.supportEmail}`}
-                      className="text-violet-400 hover:text-violet-300"
-                    >
-                      {SITE_CONFIG.contact.supportEmail}
-                    </a>
-                    <p className="text-gray-500 text-sm mt-1">
-                      For technical support, account issues, and billing questions.
-                    </p>
-                  </div>
+            {/* Primary Support Notice */}
+            <div className="p-6 rounded-2xl bg-violet-600/10 border border-violet-500/20 mb-6">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-violet-600/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-violet-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Need Help?</h3>
+                  <p className="text-gray-400 text-sm mb-2">
+                    For support, billing, or account help, email:
+                  </p>
+                  <a 
+                    href={`mailto:${SITE_CONFIG.contact.supportEmail}`}
+                    className="text-violet-400 hover:text-violet-300 font-medium text-lg"
+                  >
+                    {SITE_CONFIG.contact.supportEmail}
+                  </a>
                 </div>
               </div>
-
+            </div>
+            
+            <div className="space-y-6">
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-violet-600/20 flex items-center justify-center flex-shrink-0">
@@ -110,7 +170,7 @@ export const ContactPage = () => {
                 {SITE_CONFIG.legal.operatorDisclosure}
               </p>
               <p className="text-gray-500 text-xs mt-2">
-                {SITE_CONFIG.legal.businessAddress}
+                Business address: {SITE_CONFIG.legal.businessAddress}
               </p>
             </div>
           </div>
@@ -119,98 +179,85 @@ export const ContactPage = () => {
           <div>
             <h2 className="text-2xl font-bold text-white mb-6">Send Us a Message</h2>
             
-            {submitted ? (
-              <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 text-center">
-                <CheckCircle className="w-12 h-12 text-emerald-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">Message Prepared</h3>
-                <p className="text-gray-400">
-                  Your email client should open with your message. If it doesn't, please email us directly at{" "}
+            {/* Form Notice */}
+            <div className="p-4 rounded-xl bg-amber-600/10 border border-amber-500/20 mb-6">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <p className="text-gray-400 text-sm">
+                  This form will open your email client. You can also email us directly at{" "}
                   <a href={`mailto:${SITE_CONFIG.contact.supportEmail}`} className="text-violet-400 hover:text-violet-300">
                     {SITE_CONFIG.contact.supportEmail}
                   </a>
                 </p>
-                <Button 
-                  className="mt-6 btn-secondary"
-                  onClick={() => setSubmitted(false)}
-                >
-                  Send Another Message
-                </Button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                    Your Name
-                  </label>
-                  <Input
-                    id="name"
-                    type="text"
-                    required
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                    placeholder="John Doe"
-                  />
-                </div>
+            </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email Address
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    required
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                    placeholder="john@example.com"
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Your Name <span className="text-red-400">*</span>
+                </label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={formState.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  className={`bg-white/5 border-white/10 text-white placeholder:text-gray-500 ${errors.name ? 'border-red-500' : ''}`}
+                  placeholder="John Doe"
+                />
+                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+              </div>
 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                    Subject
-                  </label>
-                  <Input
-                    id="subject"
-                    type="text"
-                    required
-                    value={formState.subject}
-                    onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                    placeholder="How can we help?"
-                  />
-                </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email Address <span className="text-red-400">*</span>
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formState.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  className={`bg-white/5 border-white/10 text-white placeholder:text-gray-500 ${errors.email ? 'border-red-500' : ''}`}
+                  placeholder="john@example.com"
+                />
+                {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+              </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                    Message
-                  </label>
-                  <Textarea
-                    id="message"
-                    required
-                    rows={5}
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
-                    placeholder="Please describe your question or issue..."
-                  />
-                </div>
+              <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                  Subject <span className="text-red-400">*</span>
+                </label>
+                <Input
+                  id="subject"
+                  type="text"
+                  value={formState.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
+                  className={`bg-white/5 border-white/10 text-white placeholder:text-gray-500 ${errors.subject ? 'border-red-500' : ''}`}
+                  placeholder="How can we help?"
+                />
+                {errors.subject && <p className="text-red-400 text-xs mt-1">{errors.subject}</p>}
+              </div>
 
-                <Button type="submit" className="w-full btn-gradient">
-                  <Send className="w-4 h-4 mr-2" />
-                  Send Message
-                </Button>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  Message <span className="text-red-400">*</span>
+                </label>
+                <Textarea
+                  id="message"
+                  rows={5}
+                  value={formState.message}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
+                  className={`bg-white/5 border-white/10 text-white placeholder:text-gray-500 ${errors.message ? 'border-red-500' : ''}`}
+                  placeholder="Please describe your question or issue..."
+                />
+                {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
+              </div>
 
-                <p className="text-gray-500 text-xs text-center">
-                  This will open your email client. You can also email us directly at{" "}
-                  <a href={`mailto:${SITE_CONFIG.contact.supportEmail}`} className="text-violet-400 hover:text-violet-300">
-                    {SITE_CONFIG.contact.supportEmail}
-                  </a>
-                </p>
-              </form>
-            )}
+              <Button type="submit" className="w-full btn-gradient">
+                <Mail className="w-4 h-4 mr-2" />
+                Send Message
+              </Button>
+            </form>
           </div>
         </div>
       </div>
