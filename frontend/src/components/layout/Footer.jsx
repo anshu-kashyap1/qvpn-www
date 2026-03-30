@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Shield, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { SITE_CONFIG, NAV_LINKS } from "@/config/site";
 
 export const Footer = () => {
