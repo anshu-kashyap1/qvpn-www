@@ -11,7 +11,7 @@ export const Footer = () => {
           <div className="col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <img 
-                src="/logo-64.png" 
+                src="/logo-180-alt.png" 
                 alt="QVPN Logo" 
                 className="w-8 h-8 rounded-lg"
               />

@@ -41,7 +41,7 @@ export const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2" data-testid="logo">
             <img 
-              src="/logo-64.png" 
+              src="/logo-180-alt.png" 
               alt="QVPN Logo" 
               className="w-8 h-8 rounded-lg"
             />
