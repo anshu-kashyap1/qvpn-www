@@ -10,9 +10,11 @@ export const Footer = () => {
           {/* Logo & Description */}
           <div className="col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
+              <img 
+                src="/logo-64.png" 
+                alt="QVPN Logo" 
+                className="w-8 h-8 rounded-lg"
+              />
               <span className="text-xl font-bold text-white">{SITE_CONFIG.brand.name}</span>
             </Link>
             <p className="text-gray-400 text-sm mb-4 max-w-xs">
